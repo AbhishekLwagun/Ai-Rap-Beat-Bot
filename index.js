@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const Discord = require("discord.js");
 const { prefix, token } = require("./config.json");
 const keepAlive = require("./server")
@@ -131,4 +133,4 @@ function play(guild, song) {
 }
 keepAlive()
 
-client.login(process.env.TOKEN);
+client.login(process.env.TOKEN_TEXT);
