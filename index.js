@@ -1,5 +1,7 @@
 require('dotenv').config();
 const Discord = require("discord.js");
+const { RichEmbed } = require('discord.js');
+
 const { prefix, token } = require("./config.json");
 const ytdl = require("ytdl-core");
 const keepAlive = require("./server");
@@ -45,7 +47,11 @@ client.on("message", async message => {
     } else if (message.content.startsWith(`${prefix}resume`)) {
         resume(message, serverQueue);
         return;
+    } else if (message.content.startsWith(`${prefix}list`)) {
+        list(message, serverQueue);
+        return;
     } else {
+
         message.channel.send("You need to enter a valid command!");
     }
 });
@@ -187,6 +193,35 @@ function play(guild, song) {
         .on("error", error => console.error(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     serverQueue.textChannel.send(`Start playing: **${song.title}**`);
+}
+
+function list(message, serverQueue) {
+    const item = message.client.youtube.getVideoByID(id);
+    const song = {
+        url: item.id,
+        title: item.title,
+        requester: msg.author.id,
+        thumbnail: item.thumbnails.default.url,
+        length: moment.duration(item.durationSeconds, 'seconds').humanize()
+    };
+
+    if (message.client.music.get(message.guild.id).queue.length > 0) {
+        const embed = new RichEmbed()
+            .setTitle('🎶 Added')
+            .setColor('#EA934E')
+            .setThumbnail(song.thumbnail)
+            .setDescription(`**Added to be playing **\n\n
+    **Song:** ${song.title}\n
+    **Duration:** ${song.length}\n
+    **Queue:** ${msg.client.music.get(msg.guild.id).queue.length}\n
+    **Listener:** <@${song.requester}>`);
+
+        message.channel.send({ embed });
+    }
+
+    message.client.music.get(message.guild.id).queue.push(song);
+
+    return video;
 }
 
 keepAlive();
