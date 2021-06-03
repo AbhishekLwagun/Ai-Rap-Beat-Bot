@@ -1,14 +1,13 @@
 require('dotenv').config();
-
 const Discord = require("discord.js");
 const { prefix, token } = require("./config.json");
 const ytdl = require("ytdl-core");
-
 const keepAlive = require("./server");
+const yts = require("yt-search");
 
 const client = new Discord.Client();
-
 const queue = new Map();
+
 
 
 
@@ -59,11 +58,26 @@ async function execute(message, serverQueue) {
         );
     }
 
-    const songInfo = await ytdl.getInfo(args[1]);
-    const song = {
-        title: songInfo.videoDetails.title,
-        url: songInfo.videoDetails.video_url,
-    };
+    let song;
+    if (ytdl.validateURL(args[1])) {
+        const songInfo = await ytdl.getInfo(args[1]);
+        song = {
+            title: songInfo.title,
+            url: songInfo.video_url
+        };
+    } else {
+        const { videos } = await yts(args.slice(1).join(" "));
+        if (!videos.length) return message.channel.send("No songs were found!");
+        song = {
+            title: videos[0].title,
+            url: videos[0].url
+        };
+    }
+    // const songInfo = await ytdl.getInfo(args[1]);
+    // const song = {
+    //     title: songInfo.videoDetails.title,
+    //     url: songInfo.videoDetails.video_url,
+    // };
 
     if (!serverQueue) {
         const queueContruct = {
@@ -135,6 +149,6 @@ function play(guild, song) {
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
     serverQueue.textChannel.send(`Start playing: **${song.title}**`);
 }
-keepAlive()
 
+keepAlive();
 client.login(process.env.TOKEN_TEXT);
