@@ -42,7 +42,7 @@ client.on("message", async message => {
         pause(message, serverQueue);
         return;
 
-    } else if (message.content.startsWith(`${prefix}pause`)) {
+    } else if (message.content.startsWith(`${prefix}resume`)) {
         resume(message, serverQueue);
         return;
     } else {
@@ -149,11 +149,12 @@ function resume(message, serverQueue) {
         );
 
     if (!serverQueue)
-        return message.channel.send("There is no song that  I could pause!");
+        return message.channel.send("There is no song that  I could resume!");
 
     serverQueue.songs = [];
     serverQueue.connection.dispatcher.resume();
 }
+
 
 function stop(message, serverQueue) {
     if (!message.member.voice.channel)
