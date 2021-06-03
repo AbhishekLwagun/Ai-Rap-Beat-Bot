@@ -193,14 +193,14 @@ function play(guild, song) {
         .on("error", error => console.error(error));
     dispatcher.setVolumeLogarithmic(serverQueue.volume / 5);
 
-    const embed = new RichEmbed()
+    const embed = new Discord.MessageEmbed()
         .setTitle('🎶 Added')
         .setColor('#EA934E')
         .setThumbnail(song.thumbnail)
         .setDescription(`**Added to be playing **\n\n
 **Song:** ${song.title}\n
 **Duration:** ${song.length}\n
-**Queue:** ${msg.client.music.get(msg.guild.id).queue.length}\n
+**Queue:** ${message.client.music.get(message.guild.id).queue.length}\n
 **Listener:** <@${song.requester}>`);
 
     // serverQueue.textChannel.send(`Start playing: **${song.title}**`);
