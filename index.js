@@ -137,7 +137,6 @@ function pause(message, serverQueue) {
     if (!serverQueue)
         return message.channel.send("There is no song that  I could pause!");
 
-    serverQueue.songs = [];
     serverQueue.connection.dispatcher.pause();
 }
 
@@ -151,8 +150,10 @@ function resume(message, serverQueue) {
     if (!serverQueue)
         return message.channel.send("There is no song that  I could resume!");
 
-    serverQueue.songs = [];
-    serverQueue.connection.dispatcher.resume();
+
+
+    if (server.dispatcher.paused)
+        serverQueue.connection.dispatcher.resume();
 }
 
 
