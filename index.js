@@ -152,8 +152,7 @@ function resume(message, serverQueue) {
 
 
 
-    if (serverQueue.dispatcher.paused)
-        serverQueue.connection.dispatcher.resume();
+    serverQueue.connection.dispatcher.resume();
 }
 
 
