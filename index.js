@@ -204,7 +204,7 @@ function play(guild, song) {
 **Listener:** <@${song.requester}>`);
 
     // serverQueue.textChannel.send(`Start playing: **${song.title}**`);
-    serverQueue.textChannel.send({ embed });
+    serverQueue.textChannel.send(`${ embed }`);
 
 }
 
