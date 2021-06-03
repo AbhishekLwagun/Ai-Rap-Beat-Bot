@@ -144,11 +144,11 @@ function pause(message, serverQueue) {
 function resume(message, serverQueue) {
     if (!message.member.voice.channel)
         return message.channel.send(
-            "You have to be in a voice channel to stop the music!"
+            "You have to be in a voice channel to resume the music!"
         );
 
-    if (!serverQueue)
-        return message.channel.send("There is no song that  I could resume!");
+    if (!serverQueue.dispatcher.paused)
+        return message.channel.send("There is no song that I could resume!");
 
 
 
