@@ -93,7 +93,8 @@ async function execute(message, serverQueue) {
             connection: null,
             songs: [],
             volume: 5,
-            playing: true
+            playing: true,
+            paused: false,
         };
 
         queue.set(message.guild.id, queueContruct);
