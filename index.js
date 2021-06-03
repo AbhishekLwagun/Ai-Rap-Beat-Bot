@@ -1,7 +1,5 @@
 require('dotenv').config();
 const Discord = require("discord.js");
-const { RichEmbed } = require('discord.js');
-
 const { prefix, token } = require("./config.json");
 const ytdl = require("ytdl-core");
 const keepAlive = require("./server");
@@ -47,9 +45,7 @@ client.on("message", async message => {
     } else if (message.content.startsWith(`${prefix}resume`)) {
         resume(message, serverQueue);
         return;
-    } else if (message.content.startsWith(`${prefix}list`)) {
-        list(message, serverQueue);
-        return;
+
     } else {
 
         message.channel.send("You need to enter a valid command!");
