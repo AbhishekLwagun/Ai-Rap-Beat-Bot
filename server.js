@@ -12,7 +12,9 @@ server.all("/", (req, res) => {
 function keepAlive() {
     server.listen(port, () => {
         console.log("Server is ready.")
+
     })
 }
 
-module.exports = keepAlive;
+
+module.exports = keepAlive
